@@ -47,4 +47,47 @@ var questions = [
         choices: ["Champagne", "Chardonnay", "Cabernet", "Malbec"],
         answer: "Malbec"
     },
-]
+];
+
+var score = 0;
+var questionIndex = 0;
+
+// Start working code
+var timer = document.querySelector("timer");
+var startTimer = document.querySelector("startTimer");
+var questions = document.querySelector("questions");
+
+var secondsLeft = 90;
+var holdInterval = 0;
+var penalty = 10;
+var ulCreate = document.createElement("ul");
+
+// timer button 
+timer.addEventListener("click", function() {
+    if (holdInterval === 0) {
+        holdInterval = setInterval(function () {
+            secondsLeft--;
+            timer.textContent = "Time: " + secondsLeft;
+
+            if (secondsLeft <= 0) {
+                clearInterval(holdInterval);
+                allDone();
+                timer.textContent = "Your time is up";
+            }
+        }, 1000);
+    };
+
+    render(questionIndex); 
+});
+
+// Renders questions and choices to the page
+function render(_questionIndex) {
+    questions.innerHTML = "";
+    ulCreate.innerHTML = "";
+    for (var i = 0; i < questions.length; i ++) {
+        var userQuestion = questions[questionIndex].title;
+        var userChoices = questions[questionIndex].choices;
+        questions.textContent = userQuestion;
+    }
+}
+
