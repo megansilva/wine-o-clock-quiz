@@ -55,15 +55,15 @@ var questionIndex = 0;
 // Start working code
 var timer = document.querySelector("timer");
 var startTimer = document.querySelector("startTimer");
-var questions = document.querySelector("questions");
+var questionsDiv = document.querySelector("questions");
 
 var secondsLeft = 90;
 var holdInterval = 0;
-var penalty = 10;
+var penalty = 5;
 var ulCreate = document.createElement("ul");
 
 // timer button 
-timer.addEventListener("click", function() {
+timer.addEventListener("click", function () {
     if (holdInterval === 0) {
         holdInterval = setInterval(function () {
             secondsLeft--;
@@ -77,17 +77,122 @@ timer.addEventListener("click", function() {
         }, 1000);
     };
 
-    render(questionIndex); 
+    render(questionIndex);
 });
 
 // Renders questions and choices to the page
 function render(_questionIndex) {
-    questions.innerHTML = "";
+    questionsDiv.innerHTML = "";
     ulCreate.innerHTML = "";
-    for (var i = 0; i < questions.length; i ++) {
+    for (var i = 0; i < questions.length; i++) {
         var userQuestion = questions[questionIndex].title;
         var userChoices = questions[questionIndex].choices;
-        questions.textContent = userQuestion;
+        questionsDiv.textContent = userQuestion;
     }
 }
+
+function compare(event) {
+    var element = event.target;
+
+    if (element.matches("li")) {
+        var createDiv = documet.createElement("div");
+        createDiv.setAttribute("id", "creatDiv");
+
+        if (element.textContent == questions[questionIndex].answer) {
+            score++;
+            createDiv.textContent = "Correct! The answer is: " + questions[questionIndex].answer;
+        } else {
+            secondsLeft = secondsLeft - penalty;
+            createDiv.textContent = "Incorrect! The correct answer is: " + questions[questionIndex].answer;
+        }
+    }
+}
+
+questionIndex++;
+
+if (questionIndex >= questions.length) {
+    allDone();
+    createDiv.textContent = "End of quiz!" + " " + "You got " + score + "/" + questions.length + " correct!";
+} else {
+    render(questionIndex);
+}
+
+questionsDiv.appendChild(createDiv);
+
+
+function allDone() {
+    questionsDiv.innerHTML = "";
+    timer.innerHTML = "";
+
+    var createH1 = document.createElement("h1");
+    createH1.setAttribute("id", "createH1");
+    createH1.textContent = "All done!"
+
+    questionsDiv.appendChild(createH1);
+
+    var createP = document.createElement("p");
+    createP.setAttribute("id", "createP");
+
+    questionsDiv.appendChild(createP);
+}
+
+if (secondsLeft >= 0) {
+    var timeRemaining = secondsLeft;
+    var createP2 = document.createElement("p");
+    clearInterval(holdInterval);
+    createP2.textContent = "Your final score is: " + timeRemaining;
+
+    questionsDiv.appendChild(createP2);
+}
+
+var createLabel = document.createElement("label");
+createLabel.setAttribute("id", "createLabel");
+createLabel.textContent = "Enter your initial: ";
+
+questionsDiv.appendChild(createLabel);
+
+var createInput = document.createElement("input");
+createInput.setAttribute("type", "text");
+createInput.setAttribute("id", "initials");
+createInput.textContent = "";
+
+questionsDiv.appendChild(createInput);
+
+var createSubmit = document.createElement("button");
+createSubmit.setAttribute("type", "submit");
+createSubmit.setAttribute("id", "Submit");
+createSubmit.textContent = "Submit!";
+
+questionsDiv.appendChild(createSubmit);
+
+createSubmit.addEventListener("click", function () {
+    var initials = createInput.value;
+
+    if (initials === null) {
+        console.log("No value entered!");
+
+    } else {
+        var finalScore = {
+            initials: initials,
+            socre: timeRemaining
+        }
+        console.log(finalScore);
+        var allScores = localStorage.getItem("allScores");
+        if (allScores === null) {
+            allScores = [];
+        } else {
+            allScores = JSON.parse(allScores);
+        }
+        allScores.push(finalScore);
+        var newScore = JSON.stringify(allScores);
+        localStorage.setItem("allScores", newScore);
+        window.location.replace("./highscores.html");
+    }
+});
+
+
+
+
+
+
 
