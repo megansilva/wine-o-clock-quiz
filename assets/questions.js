@@ -63,7 +63,7 @@ var penalty = 5;
 var ulCreate = document.createElement("ul");
 
 // timer button 
-timer.addEventListener("click", function () {
+startTimer.addEventListener("click", function() {
     if (holdInterval === 0) {
         holdInterval = setInterval(function () {
             secondsLeft--;
@@ -108,16 +108,16 @@ function compare(event) {
     }
 }
 
-questionIndex++;
+    questionIndex++;
 
-if (questionIndex >= questions.length) {
-    allDone();
-    createDiv.textContent = "End of quiz!" + " " + "You got " + score + "/" + questions.length + " correct!";
-} else {
-    render(questionIndex);
-}
+    if (questionIndex >= questions.length) {
+        allDone();
+        createDiv.textContent = "End of quiz!" + " " + "You got " + score + "/" + questions.length + " correct!";
+    } else {
+        render(questionIndex);
+    }
 
-questionsDiv.appendChild(createDiv);
+    questionsDiv.appendChild(createDiv);
 
 
 function allDone() {
@@ -165,7 +165,7 @@ createSubmit.textContent = "Submit!";
 
 questionsDiv.appendChild(createSubmit);
 
-createSubmit.addEventListener("click", function () {
+createSubmit.addEventListener("click", function() {
     var initials = createInput.value;
 
     if (initials === null) {
