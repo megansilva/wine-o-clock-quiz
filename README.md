@@ -6,8 +6,14 @@
 </p>
 
 ## Technologies
-
+<ul>
+    <li> HTML
+    <li> CSS
+    <li> JavaScript
+</ul>
 
 ## Screenshots
+<img src="./assets/images/screenshot.jpg" alt="wine quiz opening page">
 
 ## Link
+
