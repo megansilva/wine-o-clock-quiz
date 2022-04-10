@@ -53,9 +53,9 @@ var score = 0;
 var questionIndex = 0;
 
 // Start working code
-var timer = document.querySelector("timer");
-var startTimer = document.querySelector("startTimer");
-var questionsDiv = document.querySelector("questions");
+var timer = document.querySelector("#timer");
+var startTimer = document.querySelector("#startTimer");
+var questionsDiv = document.querySelector("#questions");
 
 var secondsLeft = 90;
 var holdInterval = 0;
@@ -81,8 +81,8 @@ startTimer.addEventListener("click", function() {
 });
 
 // Renders questions and choices to the page
-function render(_questionIndex) {
-    questionsDiv.innerHTML = "";
+function render(questionIndex) {
+    questionsDiv.innerHTML = ""; 
     ulCreate.innerHTML = "";
     for (var i = 0; i < questions.length; i++) {
         var userQuestion = questions[questionIndex].title;
@@ -90,6 +90,7 @@ function render(_questionIndex) {
         questionsDiv.textContent = userQuestion;
     }
 }
+
 
 function compare(event) {
     var element = event.target;
