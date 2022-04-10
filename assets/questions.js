@@ -1,4 +1,4 @@
-var questions = [
+var questionsDiv = [
     {
         // question 1
         title: "Which wine pairs well with salmon?",
@@ -53,9 +53,9 @@ var score = 0;
 var questionIndex = 0;
 
 // Start working code
-var timer = document.querySelector("#timer");
+var currentTime = document.querySelector("#currentTime");
 var startTimer = document.querySelector("#startTimer");
-var questionsDiv = document.querySelector("#questions");
+var questionsDiv = document.querySelector("#questionsDiv");
 
 var secondsLeft = 90;
 var holdInterval = 0;
@@ -67,12 +67,12 @@ startTimer.addEventListener("click", function() {
     if (holdInterval === 0) {
         holdInterval = setInterval(function () {
             secondsLeft--;
-            timer.textContent = "Time: " + secondsLeft;
+            currentTime.textContent = "Time: " + secondsLeft;
 
             if (secondsLeft <= 0) {
                 clearInterval(holdInterval);
                 allDone();
-                timer.textContent = "Your time is up";
+                currentTime.textContent = "Your time is up";
             }
         }, 1000);
     };
@@ -82,17 +82,17 @@ startTimer.addEventListener("click", function() {
 
 // Renders questions and choices to the page
 function render(questionIndex) {
-    questionsDiv.innerHTML = ""; 
-    ulCreate.innerHTML = "";
-    for (var i = 0; i < questions.length; i++) {
-        var userQuestion = questions[questionIndex].title;
-        var userChoices = questions[questionIndex].choices;
-        questionsDiv.textContent = userQuestion;
+    // questionsDiv.innerHTML = ""; 
+    // ulCreate.innerHTML = "";
+    for (var i = 0; i < questionsDiv.length; i++) {
+        var userQuestion = questionsDiv[questionIndex].title;
+        var userChoices = questionsDiv[questionIndex].choices;
+        questions.textContent = userQuestion;
     }
     userChoices.forEach(function (newItem) {
         var listItem = document.createElement("li");
         listItem.textContent = newItem;
-        questionsDiv.appendChild(ulCreate);
+        // questionsDiv.appendChild(ulCreate);
         ulCreate.appendChild(listItem);
         listItem.addEventListener("click", (compare));
     })
@@ -119,14 +119,14 @@ function compare(event) {
 
     questionIndex++;
 
-    if (questionIndex >= questions.length) {
+    if (questionIndex >= questionsDiv.length) {
         allDone();
         createDiv.textContent = "End of quiz!" + " " + "You got " + score + "/" + questions.length + " correct!";
     } else {
         render(questionIndex);
     }
 
-    questionsDiv.appendChild(createDiv);
+    // questionsDiv.appendChild(createDiv);
 
 
 function allDone() {
@@ -151,28 +151,28 @@ if (secondsLeft >= 0) {
     clearInterval(holdInterval);
     createP2.textContent = "Your final score is: " + timeRemaining;
 
-    questionsDiv.appendChild(createP2);
+    //questionsDiv.appendChild(createP2);
 }
 
 var createLabel = document.createElement("label");
 createLabel.setAttribute("id", "createLabel");
 createLabel.textContent = "Enter your initial: ";
 
-questionsDiv.appendChild(createLabel);
+//questionsDiv.appendChild(createLabel);
 
 var createInput = document.createElement("input");
 createInput.setAttribute("type", "text");
 createInput.setAttribute("id", "initials");
 createInput.textContent = "";
 
-questionsDiv.appendChild(createInput);
+//questionsDiv.appendChild(createInput);
 
 var createSubmit = document.createElement("button");
 createSubmit.setAttribute("type", "submit");
 createSubmit.setAttribute("id", "Submit");
 createSubmit.textContent = "Submit!";
 
-questionsDiv.appendChild(createSubmit);
+//questionsDiv.appendChild(createSubmit);
 
 createSubmit.addEventListener("click", function() {
     var initials = createInput.value;
