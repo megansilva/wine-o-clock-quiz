@@ -91,12 +91,13 @@ function render(questionIndex) {
     }
 }
 
+var createDiv = document.createElement("div");
 
 function compare(event) {
     var element = event.target;
 
     if (element.matches("li")) {
-        var createDiv = documet.createElement("div");
+        
         createDiv.setAttribute("id", "creatDiv");
 
         if (element.textContent == questions[questionIndex].answer) {
